@@ -10,9 +10,10 @@ npm install
 
 ## Code
 
-Take a look at the following files of this example to see the required code: 
+Take a look at the following files of this example to see the required code:
 
-Your files go here
+[TreeView-plain.js](https://github.com/DevExpress-Examples/DevExtreme-TreeView-How-to-drag-and-drop-multiple-items/blob/22.1.6%2B/jQuery/src/TreeView-plain.js)
+[TreeView-hierarchy.js](https://github.com/DevExpress-Examples/DevExtreme-TreeView-How-to-drag-and-drop-multiple-items/blob/22.1.6%2B/jQuery/src/TreeView-hierarchy.js)
 
 ## Development server
 
