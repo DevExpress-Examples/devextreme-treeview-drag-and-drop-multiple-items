@@ -2,7 +2,13 @@
 
 Take a look at the following files of this example to see the required code: 
 
-Your files go here
+[tree-view-hierarchy.component.html](https://github.com/DevExpress-Examples/DevExtreme-TreeView-How-to-drag-and-drop-multiple-items/blob/22.1.6%2B/Angular/src/app/components/tree-view-hierarchical/tree-view-hierarchy.component.html)
+
+[tree-view-hierarchy.component.ts](https://github.com/DevExpress-Examples/DevExtreme-TreeView-How-to-drag-and-drop-multiple-items/blob/22.1.6%2B/Angular/src/app/components/tree-view-hierarchical/tree-view-hierarchy.component.ts)
+
+[tree-view-plain.component.html](https://github.com/DevExpress-Examples/DevExtreme-TreeView-How-to-drag-and-drop-multiple-items/blob/22.1.6%2B/Angular/src/app/components/tree-view-plain/tree-view-plain.component.html)
+
+[tree-view-plain.component.ts](https://github.com/DevExpress-Examples/DevExtreme-TreeView-How-to-drag-and-drop-multiple-items/blob/22.1.6%2B/Angular/src/app/components/tree-view-plain/tree-view-plain.component.ts)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.1.
 
