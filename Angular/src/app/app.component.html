@@ -1,0 +1,21 @@
+<div class="default-style">
+  <div class="demo-header">
+    <h3>TreeView - Select multiple items and drag'n'drop</h3>
+    <div id="toggle-container">
+        <span>Clear selection after drop</span>
+        <dx-switch id="clearAfterDropSwitch" [(value)]="clearSelectionAfterDrop"></dx-switch>
+    </div>
+  </div>
+  <dx-tab-panel [deferRendering]="false">
+    <dxi-item title="Plain Data">
+      <div *dxTemplate>
+        <tree-view-plain [shouldClearSelection]="clearSelectionAfterDrop" ></tree-view-plain>
+      </div>
+    </dxi-item>
+    <dxi-item title="Hierarchical Data">
+      <div *dxTemplate>
+        <tree-view-hierarchy [shouldClearSelection]="clearSelectionAfterDrop"></tree-view-hierarchy>
+      </div>
+    </dxi-item>
+  </dx-tab-panel>
+</div>
