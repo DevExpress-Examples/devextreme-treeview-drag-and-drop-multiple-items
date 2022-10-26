@@ -2,7 +2,9 @@
 
 Take a look at the following files of this example to see the required code: 
 
-Your files go here
+[TreeViewHierarchy.js](https://github.com/DevExpress-Examples/DevExtreme-TreeView-How-to-drag-and-drop-multiple-items/blob/22.1.6%2B/React/src/TreeViewHierarchy.js)
+
+[TreeViewPlain.js](https://github.com/DevExpress-Examples/DevExtreme-TreeView-How-to-drag-and-drop-multiple-items/blob/22.1.6%2B/React/src/TreeViewPlain.js)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
