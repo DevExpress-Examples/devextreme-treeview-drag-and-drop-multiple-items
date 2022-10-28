@@ -39,7 +39,13 @@ If you need to include more features, you can uncomment one of the following sec
 
 Take a look at the following files of this example to see the required code: 
 
-A list of files goes here
+[TreeView-hierarchy.js](https://github.com/DevExpress-Examples/DevExtreme-TreeView-How-to-drag-and-drop-multiple-items/blob/22.1.6%2B/ASP.NET%20Core/wwwroot/js/TreeView-hierarchy.js)
+[TreeViewHierarchy.cshtml](https://github.com/DevExpress-Examples/DevExtreme-TreeView-How-to-drag-and-drop-multiple-items/blob/22.1.6%2B/ASP.NET%20Core/Views/PartialViews/TreeViewHierarchy.cshtml)
+
+
+[TreeView-plain.js](https://github.com/DevExpress-Examples/DevExtreme-TreeView-How-to-drag-and-drop-multiple-items/blob/22.1.6%2B/ASP.NET%20Core/wwwroot/js/TreeView-plain.js)
+[TreeViewPlain.cshtml](https://github.com/DevExpress-Examples/DevExtreme-TreeView-How-to-drag-and-drop-multiple-items/blob/22.1.6%2B/ASP.NET%20Core/Views/PartialViews/TreeViewPlain.cshtml)
+
 
 ## Development server
 
