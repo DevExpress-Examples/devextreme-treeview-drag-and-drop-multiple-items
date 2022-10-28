@@ -14,10 +14,10 @@ function canDrag(treeView, e) {
     const fromNode = getNodeByVisualIndex(treeView, e.fromIndex);
     return fromNode.selected && e.itemData && e.itemData.length;
 }
-function canDrop(items, e, toNode, keyExpr) {
+function canDrop(treeView, e, toNode) {
     const canAcceptChildren = (e.dropInsideItem && toNode.itemData.isDirectory) || !e.dropInsideItem;
     const toNodeIsChild = toNode && e.itemData.some(i => isParent(toNode, i));
-    const fromIndices = e.itemData.map(i => getLocalIndex(items, i.key, keyExpr));
+    const fromIndices = e.itemData.map(i => getVisualIndexByNode(treeView, i.key));
     const targetThemselves = toNode && (e.itemData.some(i => i.key === toNode.key) || fromIndices.includes(e.toIndex));
     return canAcceptChildren && !toNodeIsChild && !targetThemselves;
 }
@@ -46,6 +46,11 @@ function getTopNodes(nodes) {
         return !nodes.some(n => isParent(nodeToCheck, n));
     });
 }
+function getVisualIndexByNode(treeView, key) {
+    const nodeElements = Array.from(treeView.element().querySelectorAll('.dx-treeview-node'));
+    const nodeElement = nodeElements.find(n => n.getAttribute('data-item-id') === key);
+    return nodeElements.indexOf(nodeElement);
+  }
 function getNodeByVisualIndex(treeView, index) {
     const nodeElement = treeView.element().querySelectorAll('.dx-treeview-node')[index];
     if (nodeElement) {
@@ -86,20 +91,18 @@ function TreeViewPlain(props) {
     }, []);
     const dragChange = useCallback((e) => {
         const treeView = treeViewRef.current.instance;
-        const allItems = treeView.option("items");
         const toNode = getNodeByVisualIndex(treeView, calculateToIndex(e));
-        e.cancel = !canDrop(allItems, e, toNode, treeView.option("keyExpr"));
+        e.cancel = !canDrop(treeView, e, toNode);
     }, []);
     const dragEnd = useCallback((e) => {
         const treeView = treeViewRef.current.instance;
         const toNode = getNodeByVisualIndex(treeView, calculateToIndex(e));
         const allItems = treeView.option("items");
         const treeViewExpr = {
-            items: treeView.option("itemsExpr"),
             key: treeView.option("keyExpr"),
             parentKey: treeView.option("parentIdExpr")
         }
-        if (canDrop(allItems, e, toNode, treeViewExpr.key)) {
+        if (canDrop(treeView, e, toNode)) {
             moveNodes(allItems, e, toNode, treeViewExpr);
         }
         treeView.option("items", allItems);

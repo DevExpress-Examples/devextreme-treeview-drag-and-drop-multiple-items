@@ -23,20 +23,18 @@ export class TreeViewPlainComponent {
     }
     dragChange(e) {
         const treeView = this.treeView.instance;
-        const allItems = treeView.option("items");
         const toNode = this.getNodeByVisualIndex(treeView, this.calculateToIndex(e));
-        e.cancel = !this.canDrop(allItems, e, toNode, treeView.option("keyExpr"));
+        e.cancel = !this.canDrop(treeView, e, toNode);
     }
     dragEnd(e) {
         const treeView = this.treeView.instance;
         const toNode = this.getNodeByVisualIndex(treeView, this.calculateToIndex(e));
         const allItems = treeView.option("items");
         const treeViewExpr = {
-            items: treeView.option("itemsExpr"),
             key: treeView.option("keyExpr"),
             parentKey: treeView.option("parentIdExpr")
         }
-        if (this.canDrop(allItems, e, toNode, treeViewExpr.key)) {
+        if (this.canDrop(treeView, e, toNode)) {
             this.moveNodes(allItems, e, toNode, treeViewExpr);
         }
         treeView.option("items", allItems);
@@ -47,10 +45,10 @@ export class TreeViewPlainComponent {
         const fromNode = this.getNodeByVisualIndex(treeView, e.fromIndex);
         return fromNode.selected && e.itemData && e.itemData.length;
     }
-    canDrop(items, e, toNode, keyExpr) {
+    canDrop(treeView, e, toNode) {
         const canAcceptChildren = (e.dropInsideItem && toNode.itemData.isDirectory) || !e.dropInsideItem;
         const toNodeIsChild = toNode && e.itemData.some(i => this.isParent(toNode, i));
-        const fromIndices = e.itemData.map(i => this.getLocalIndex(items, i.key, keyExpr));
+        const fromIndices = e.itemData.map(i => this.getVisualIndexByKey(treeView, i.key));
         const targetThemselves = toNode && (e.itemData.some(i => i.key === toNode.key) || fromIndices.includes(e.toIndex));
         return canAcceptChildren && !toNodeIsChild && !targetThemselves;
     }
@@ -78,6 +76,11 @@ export class TreeViewPlainComponent {
         return nodes.filter(nodeToCheck => {
             return !nodes.some(n => this.isParent(nodeToCheck, n));
         });
+    }
+    getVisualIndexByKey(treeView, key) {
+        const nodeElements = Array.from(treeView.element().querySelectorAll('.dx-treeview-node'));
+        const nodeElement = nodeElements.find(n => (<Element>n).getAttribute('data-item-id') === key);
+        return nodeElements.indexOf(nodeElement);
     }
     getNodeByVisualIndex(treeView, index) {
         const nodeElement = treeView.element().querySelectorAll('.dx-treeview-node')[index];
