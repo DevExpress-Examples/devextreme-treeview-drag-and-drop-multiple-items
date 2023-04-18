@@ -37,3 +37,7 @@ TreeView doesn't have a built-in Drag and Drop functionality. This example is ba
 - [Getting Started with TreeView](https://js.devexpress.com/Documentation/Guide/UI_Components/TreeView/Getting_Started_with_TreeView/)
 
 - [TreeView - API Reference](https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxTreeView/)
+
+## More Examples
+- [DataGrid for DevExtreme - How to drag multiple rows](https://github.com/DevExpress-Examples/devextreme-datagrid-drag-multiple-rows)
+- [DataGrid for DevExtreme - How to drag multiple rows between two grids](https://github.com/DevExpress-Examples/devextreme-datagrid-drag-multiple-rows-between-grids)
