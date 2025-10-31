@@ -1,0 +1,24 @@
+<dx-sortable filter=".dx-treeview-item"
+    [allowDropInsideItem]="true"
+    [allowReordering]="true"
+    (onDragStart)="dragStart($event)"
+    (onDragChange)="dragChange($event)"
+    (onDragEnd)="dragEnd($event)"
+    dragTemplate="draggedItemsTemplate"
+    >
+    <div *dxTemplate="let dragData of 'draggedItemsTemplate'">
+        <div *ngFor="let node of dragData.itemData">
+            <div class="dragged-item">{{node.text}}</div>
+        </div>
+    </div>
+    <dx-tree-view #treeView
+        class="tab-item-content"
+        [items]="treeItems"
+        [expandNodesRecursive]="false"
+        [selectNodesRecursive]="false"
+        showCheckBoxesMode="normal"
+        dataStructure="plain"
+        displayExpr="name"
+        [width]="300"
+    ></dx-tree-view>
+</dx-sortable>

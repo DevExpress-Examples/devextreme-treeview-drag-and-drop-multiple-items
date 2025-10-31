@@ -1,54 +1,51 @@
 <!-- default badges list -->
-![](https://img.shields.io/endpoint?url=https://codecentral.devexpress.com/api/v1/VersionRange/340354634/25.1.2%2B)
-[![](https://img.shields.io/badge/Open_in_DevExpress_Support_Center-FF7200?style=flat-square&logo=DevExpress&logoColor=white)](https://supportcenter.devexpress.com/ticket/details/T1129779)
+![](https://img.shields.io/endpoint?url=https://codecentral.devexpress.com/api/v1/VersionRange/555418630/22.1.6%2B)
+[![](https://img.shields.io/badge/Open_in_DevExpress_Support_Center-FF7200?style=flat-square&logo=DevExpress&logoColor=white)](https://supportcenter.devexpress.com/ticket/details/T1123138)
 [![](https://img.shields.io/badge/📖_How_to_use_DevExpress_Examples-e9f6fc?style=flat-square)](https://docs.devexpress.com/GeneralInformation/403183)
 [![](https://img.shields.io/badge/💬_Leave_Feedback-feecdd?style=flat-square)](#does-this-example-address-your-development-requirementsobjectives)
 <!-- default badges end -->
-# DevExtreme Examples Template
+# TreeView for DevExtreme - How to drag and drop multiple items
 
-This is the repository template for creating new examples. 
+This example demonstrates how to implement the Drag and Drop functionality for multiple selected items in [TreeView](https://js.devexpress.com/Documentation/Guide/UI_Components/TreeView/Getting_Started_with_TreeView/). It contains implementations for both plain and hierarchical data structures.
 
-![Example image](images/image-template.png)
+<div align="center"><img alt="TreeView for DevExtreme - How to drag and drop multiple items" src="treeview-select-multiple-items.png" /></div>
 
-Use **DevExtreme _Product_ - _Task_** template for a title. 
+Use the following demos if you want to implement Drag and Drop of single items:
 
-Describe the solved task in this section.
+[TreeView - Drag & Drop for Plain Data Structure](https://js.devexpress.com/Demos/WidgetsGallery/Demo/TreeView/DragAndDropPlainDataStructure/jQuery/Light/)
 
-Put a screenshot/gif that illustrates the result here.
+[TreeView - Drag & Drop for Hierarchical Data Structure](https://js.devexpress.com/Demos/WidgetsGallery/Demo/TreeView/DragAndDropHierarchicalDataStructure/jQuery/Light/)
 
-Then, add implementation details (steps, code snippets, and other technical information in a free form), or add a link to an existing document with implementation details. 
+## Implementation Details
+TreeView doesn't have a built-in Drag and Drop functionality. This example is based on the [DevExtreme Sortable](https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxSortable/) component, which adds the capability of reordering items.
 
 ## Files to Review
 
 - **Angular**
     - [app.component.html](Angular/src/app/app.component.html)
     - [app.component.ts](Angular/src/app/app.component.ts)
+- **jQuery**
+    - [index.js](jQuery/src/index.js)
 - **React**
-    - [App.tsx](React/src/App.tsx)
+    - [App.js](React/src/App.js)
 - **Vue**
     - [App.vue](Vue/src/App.vue)
-    - [Home.vue](Vue/src/components/HomeContent.vue)
-- **jQuery**
-    - [index.html](jQuery/src/index.html)
-    - [index.js](jQuery/src/index.js)
-- **ASP.NET Core**    
+- **ASP.Net Core**    
     - [Index.cshtml](ASP.NET%20Core/Views/Home/Index.cshtml)
 
 ## Documentation
 
-- link
-- link
-- ...
+- [Getting Started with TreeView](https://js.devexpress.com/Documentation/Guide/UI_Components/TreeView/Getting_Started_with_TreeView/)
+
+- [TreeView - API Reference](https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxTreeView/)
 
 ## More Examples
-
-- link
-- link
-- ...
+- [DataGrid for DevExtreme - How to drag multiple rows](https://github.com/DevExpress-Examples/devextreme-datagrid-drag-multiple-rows)
+- [DataGrid for DevExtreme - How to drag multiple rows between two grids](https://github.com/DevExpress-Examples/devextreme-datagrid-drag-multiple-rows-between-grids)
 <!-- feedback -->
 ## Does this example address your development requirements/objectives?
 
-[<img src="https://www.devexpress.com/support/examples/i/yes-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=devextreme-examples-template&~~~was_helpful=yes) [<img src="https://www.devexpress.com/support/examples/i/no-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=devextreme-examples-template&~~~was_helpful=no)
+[<img src="https://www.devexpress.com/support/examples/i/yes-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=devextreme-treeview-drag-and-drop-multiple-items&~~~was_helpful=yes) [<img src="https://www.devexpress.com/support/examples/i/no-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=devextreme-treeview-drag-and-drop-multiple-items&~~~was_helpful=no)
 
 (you will be redirected to DevExpress.com to submit your response)
 <!-- feedback end -->
