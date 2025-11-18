@@ -1,10 +1,20 @@
 $(() => {
-  let count = 0;
-  $('#btn').dxButton({
-    text: `Click count: ${count}`,
-    onClick(e) {
-      count += 1;
-      e.component.option('text', `Click count: ${count}`);
-    },
+  function createTabItemTemplate(contentID) {
+    return $('<div>').attr('id', contentID).addClass('tab-item-content');
+  }
+
+  $('#tabPanel').dxTabPanel({
+    deferRendering: false,
+    items: [
+      {
+        title: 'Plain Data',
+        template: () => createTabItemTemplate('treeViewPlainData'),
+      }, {
+        title: 'Hierarchical Data',
+        template: () => createTabItemTemplate('treeViewHierarchy'),
+      },
+    ],
   });
+
+  $('#clear-after-drop-switch').dxSwitch({});
 });

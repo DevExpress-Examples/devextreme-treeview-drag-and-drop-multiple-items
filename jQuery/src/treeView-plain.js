@@ -1,0 +1,141 @@
+$(() => {
+  $('#treeViewPlainData').dxTreeView({
+    items: itemsDrivePlain,
+    expandNodesRecursive: false,
+    selectNodesRecursive: false,
+    showCheckBoxesMode: 'normal',
+    dataStructure: 'plain',
+    displayExpr: 'name',
+    width: 300,
+  });
+
+  $('#treeViewPlainData').dxSortable({
+    filter: '.dx-treeview-item',
+    allowDropInsideItem: true,
+    allowReordering: true,
+    onDragStart: (e) => {
+      const treeView = e.element.dxTreeView('instance');
+      e.itemData = treeView.getSelectedNodes();
+      e.cancel = !canDrag(treeView, e);
+    },
+    onDragChange(e) {
+      const treeView = e.element.dxTreeView('instance');
+      const toNode = getNodeByVisualIndex(treeView, calculateToIndex(e));
+      e.cancel = !canDrop(treeView, e, toNode);
+    },
+    dragTemplate: (dragData) => {
+      const itemsContainer = $('<div>');
+      dragData.itemData.forEach(((node) => {
+        const itemContainer = $('<div>').html(node.text).addClass('dragged-item');
+        itemsContainer.append(itemContainer);
+      }));
+      return itemsContainer;
+    },
+    onDragEnd(e) {
+      const treeView = e.element.dxTreeView('instance');
+      const toNode = getNodeByVisualIndex(treeView, calculateToIndex(e));
+      const allItems = treeView.option('items');
+      const treeViewExpr = {
+        key: treeView.option('keyExpr'),
+        parentKey: treeView.option('parentIdExpr'),
+      };
+      if (canDrop(treeView, e, toNode)) {
+        moveNodes(allItems, e, toNode, treeViewExpr);
+      }
+      treeView.option('items', allItems);
+      if (shouldClearSelection()) {
+        treeView.unselectAll();
+      }
+    },
+  });
+
+  function canDrag(treeView, e) {
+    const fromNode = getNodeByVisualIndex(treeView, e.fromIndex);
+    return fromNode.selected && e.itemData && e.itemData.length;
+  }
+
+  function canDrop(treeView, e, toNode) {
+    const canAcceptChildren = (e.dropInsideItem && toNode.itemData.isDirectory)
+      || !e.dropInsideItem;
+    const toNodeIsChild = toNode && e.itemData.some((i) => isParent(toNode, i));
+    const fromIndices = e.itemData.map((i) => getVisualIndexByKey(treeView, i.key));
+    const targetThemselves = toNode && (e.itemData.some((i) => i.key === toNode.key)
+      || fromIndices.includes(e.toIndex));
+    return canAcceptChildren && !toNodeIsChild && !targetThemselves;
+  }
+
+  function moveNodes(items, e, toNode, treeFieldExpr) {
+    const nodesToMove = getTopNodes(e.itemData);
+    const fromIndices = nodesToMove
+      .map((i) => getLocalIndex(items, i.key, treeFieldExpr.key))
+      .reverse();
+    fromIndices.forEach((i) => items.splice(i, 1));
+    const toIndex = toNode === null
+      ? items.length
+      : getLocalIndex(items, toNode.itemData[treeFieldExpr.key], treeFieldExpr.key);
+    items.splice(toIndex, 0, ...nodesToMove.map((i) => i.itemData));
+    nodesToMove.forEach((i) => {
+      if (e.dropInsideItem) {
+        i.itemData[treeFieldExpr.parentKey] = toNode.itemData[treeFieldExpr.key];
+      } else {
+        i.itemData[treeFieldExpr.parentKey] = toNode != null
+          ? toNode.itemData[treeFieldExpr.parentKey] : undefined;
+      }
+    });
+  }
+
+  function isParent(node, possibleParentNode) {
+    if (!node.parent) return false;
+    return node.parent.key !== possibleParentNode.key
+      ? isParent(node.parent, possibleParentNode) : true;
+  }
+
+  function getTopNodes(nodes) {
+    return nodes.filter(
+      (nodeToCheck) => !nodes.some((n) => isParent(nodeToCheck, n)),
+    );
+  }
+
+  function getVisualIndexByKey(treeView, key) {
+    const nodeElements = treeView.element().find('.dx-treeview-node').toArray();
+    const nodeElement = nodeElements.find((n) => n.getAttribute('data-item-id') === key);
+    return nodeElements.indexOf(nodeElement);
+  }
+
+  function getNodeByVisualIndex(treeView, index) {
+    const nodeElement = treeView.element().find('.dx-treeview-node')[index];
+    if (nodeElement) {
+      return getNodeByKey(treeView.getNodes(), nodeElement.getAttribute('data-item-id'));
+    }
+    return null;
+  }
+
+  function getNodeByKey(nodes, key) {
+    for (let i = 0; i < nodes.length; i += 1) {
+      if (nodes[i].key === key) {
+        return nodes[i];
+      }
+      if (nodes[i].children) {
+        const node = getNodeByKey(nodes[i].children, key);
+        if (node != null) {
+          return node;
+        }
+      }
+    }
+    return null;
+  }
+
+  function getLocalIndex(array, key, keyExpr) {
+    const idsArray = array.map((elem) => elem[keyExpr]);
+    return idsArray.indexOf(key);
+  }
+
+  function calculateToIndex(e) {
+    if (e.dropInsideItem) return e.toIndex;
+    return e.fromIndex >= e.toIndex ? e.toIndex : e.toIndex + 1;
+  }
+
+  function shouldClearSelection() {
+    return $('#clear-after-drop-switch').dxSwitch('option', 'value');
+  }
+});
