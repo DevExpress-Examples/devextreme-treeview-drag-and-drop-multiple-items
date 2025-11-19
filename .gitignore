@@ -305,6 +305,13 @@ TesterMetadata.xml
 *.bak
 
 */wwwroot/*
-
+!*/wwwroot/css/
+!*/wwwroot/js/
+*/wwwroot/css/*
+*/wwwroot/js/*
 !*/wwwroot/css/Site.css
+!*/wwwroot/js/data-HierarchyTree.js
+!*/wwwroot/js/data-PlainTree.js
+!*/wwwroot/js/TreeView-hierarchy.js
+!*/wwwroot/js/TreeView-plain.js
 *.DS_Store
