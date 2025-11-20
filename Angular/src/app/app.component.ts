@@ -1,20 +1,15 @@
 import { Component } from '@angular/core';
-import { ClickEvent } from 'devextreme/ui/button';
+import { DxSwitchModule, DxTabPanelModule } from 'devextreme-angular';
+import { TreeViewPlainComponent } from './components/tree-view-plain/tree-view-plain.component';
+import { TreeViewHierarchyComponent } from './components/tree-view-hierarchical/tree-view-hierarchy.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  standalone: true,
+  imports: [DxTabPanelModule, DxSwitchModule, TreeViewPlainComponent, TreeViewHierarchyComponent],
 })
 export class AppComponent {
-  title = 'Angular';
-
-  counter = 0;
-
-  buttonText = 'Click count: 0';
-
-  onClick(e: ClickEvent): void {
-    this.counter++;
-    this.buttonText = `Click count: ${this.counter}`;
-  }
+  clearSelectionAfterDrop = false;
 }
