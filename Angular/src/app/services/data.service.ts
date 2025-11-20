@@ -1,4 +1,3 @@
-import { publishFacade } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { Item as TreeItem } from 'devextreme/ui/tree_view';
 
