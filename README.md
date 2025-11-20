@@ -26,8 +26,8 @@ TreeView doesn't have a built-in Drag and Drop functionality. This example is ba
     - [app.component.ts](Angular/src/app/app.component.ts)
     - [tree-view-hierarchy.component.html](Angular/src/app/components/tree-view-hierarchical/tree-view-hierarchy.component.html)
     - [tree-view-hierarchy.component.ts](Angular/src/app/components/tree-view-hierarchical/tree-view-hierarchy.component.ts)
-    - [tree-view-plain.component.html](Angular/src/app/components/tree-view-hierarchical/tree-view-plain.component.html)
-    - [tree-view-plain.component.ts](Angular/src/app/components/tree-view-hierarchical/tree-view-plain.component.ts)
+    - [tree-view-plain.component.html](Angular/src/app/components/tree-view-plain/tree-view-plain.component.html)
+    - [tree-view-plain.component.ts](Angular/src/app/components/tree-view-plain/tree-view-plain.component.ts)
 - **jQuery**
     - [index.js](jQuery/src/index.js)
     - [treeView-hierarchy.js](jQuery/src/treeView-hierarchy.js)
