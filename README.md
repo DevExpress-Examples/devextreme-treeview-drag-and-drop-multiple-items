@@ -24,14 +24,26 @@ TreeView doesn't have a built-in Drag and Drop functionality. This example is ba
 - **Angular**
     - [app.component.html](Angular/src/app/app.component.html)
     - [app.component.ts](Angular/src/app/app.component.ts)
+    - [tree-view-hierarchy.component.html](Angular/src/app/components/tree-view-hierarchical/tree-view-hierarchy.component.html)
+    - [tree-view-hierarchy.component.ts](Angular/src/app/components/tree-view-hierarchical/tree-view-hierarchy.component.ts)
+    - [tree-view-plain.component.html](Angular/src/app/components/tree-view-hierarchical/tree-view-plain.component.html)
+    - [tree-view-plain.component.ts](Angular/src/app/components/tree-view-hierarchical/tree-view-plain.component.ts)
 - **jQuery**
     - [index.js](jQuery/src/index.js)
+    - [treeView-hierarchy.js](jQuery/src/treeView-hierarchy.js)
+    - [treeView-plain.js](jQuery/src/treeView-plain.js)
 - **React**
-    - [App.js](React/src/App.js)
+    - [App.tsx](React/src/App.tsx)
+    - [TreeViewHierarchy.tsx](React/src/components/TreeViewHierarchy.tsx)
+    - [TreeViewPlain.tsx](React/src/components/TreeViewPlain.tsx)
 - **Vue**
-    - [App.vue](Vue/src/App.vue)
+    - [HomeContent.vue](Vue/src/components/HomeContent.vue)
+    - [TreeViewHierarchy.vue](Vue/src/components/TreeViewHierarchy.vue)
+    - [TreeViewPlain.vue](Vue/src/components/TreeViewPlain.vue)
 - **ASP.Net Core**    
     - [Index.cshtml](ASP.NET%20Core/Views/Home/Index.cshtml)
+    - [TreeViewHierarchy.cshtml](ASP.NET%20Core/Views/PartialViews/TreeViewHierarchy.cshtml)
+    - [TreeViewPlain.cshtml](ASP.NET%20Core/Views/PartialViews/TreeViewPlain.cshtml)
 
 ## Documentation
 
