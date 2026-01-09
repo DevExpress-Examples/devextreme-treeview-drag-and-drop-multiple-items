@@ -67,7 +67,7 @@ export class TreeViewPlainComponent {
 
   canDrop(treeView: dxTreeView, e: DxSortableTypes.DragChangeEvent | DxSortableTypes.DragEndEvent, toNode: Node | null): boolean {
     if (!toNode) return false;
-    const canAcceptChildren = (e.dropInsideItem && toNode.itemData && (toNode.itemData as TreeItem).hasItems) || !e.dropInsideItem;
+    const canAcceptChildren = (e.dropInsideItem && toNode.itemData && toNode.itemData.hasItems) || !e.dropInsideItem;
     const toNodeIsChild = toNode && e.itemData.some((i: Node) => this.isParent(toNode, i));
     const fromIndices = e.itemData.map((i: Node) => this.getVisualIndexByKey(treeView, i.key));
     const targetThemselves = toNode && (e.itemData.some((i: Node) => i.key === toNode.key) || fromIndices.includes(e.toIndex ?? 0));
