@@ -1,6 +1,10 @@
 import { type Item as TreeItem } from 'devextreme/ui/tree_view';
 
-export const itemsDrivePlain: TreeItem[] = [{
+interface DriveItem extends TreeItem {
+  name: string;
+}
+
+export const itemsDrivePlain: DriveItem[] = [{
   id: '1',
   name: 'Documents',
   icon: 'activefolder',
@@ -102,7 +106,7 @@ export const itemsDrivePlain: TreeItem[] = [{
   expanded: true,
 }];
 
-export const itemsDriveHierarchy: TreeItem[] = [{
+export const itemsDriveHierarchy: DriveItem[] = [{
   id: '1',
   name: 'Documents',
   hasItems: true,

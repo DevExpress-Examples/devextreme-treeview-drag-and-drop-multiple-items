@@ -3,8 +3,8 @@ import './App.css';
 import 'devextreme/dist/css/dx.material.blue.light.compact.css';
 import TabPanel, { Item } from 'devextreme-react/tab-panel';
 import Switch, { type SwitchTypes } from 'devextreme-react/switch';
-import TreeViewPlain from './components/TreeViewPlain';
-import TreeViewHierarchy from './components/TreeViewHierarchy';
+import TreeViewPlain from './components/TreeViewPlain.tsx';
+import TreeViewHierarchy from './components/TreeViewHierarchy.tsx';
 
 function App(): JSX.Element {
   const [shouldClearSelection, setShouldClearSelection] = useState(false);

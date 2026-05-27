@@ -3,7 +3,7 @@ import TreeView from 'devextreme-react/tree-view';
 import Sortable from 'devextreme-react/sortable';
 import dxTreeView, { type Node, type Item as TreeItem } from 'devextreme/ui/tree_view';
 import { type SortableTypes } from 'devextreme-react/sortable';
-import { itemsDrivePlain as plainData } from '../data.ts';
+import { itemsDrivePlain as plainData } from '../data';
 
 interface TreeFieldExpr {
   key: string;
@@ -17,6 +17,56 @@ interface TreeViewPlainProps {
 function draggedItemsRender(data: SortableTypes.DragTemplateData): JSX.Element {
   const draggedItems = data.itemData.map((node: Node) => <div key={node.text} className='dragged-item'>{node.text}</div>);
   return (<div>{draggedItems}</div>);
+}
+
+function isParent(node: Node, possibleParentNode: Node): boolean {
+  if (!node.parent) return false;
+  return node.parent.key !== possibleParentNode.key ? isParent(node.parent, possibleParentNode) : true;
+}
+
+function getTopNodes(nodes: Node[]): Node[] {
+  return nodes.filter((nodeToCheck: Node) => !nodes.some((n: Node) => isParent(nodeToCheck, n)));
+}
+
+function getNodeByKey(nodes: Node[], key: string | number | null): Node | null {
+  for (const node of nodes) {
+    if (node.key === key) {
+      return node;
+    }
+    if (node.children) {
+      const foundNode = getNodeByKey(node.children, key);
+      if (foundNode != null) {
+        return foundNode;
+      }
+    }
+  }
+  return null;
+}
+
+function getVisualIndexByNode(treeView: dxTreeView, key: string | number): number {
+  const nodeElements = Array.from(treeView.element().querySelectorAll('.dx-treeview-node'));
+  const nodeElement = nodeElements.find((n: Element) => n.getAttribute('data-item-id') === key);
+  return nodeElements.indexOf(nodeElement as Element);
+}
+
+function getNodeByVisualIndex(treeView: dxTreeView, index: number): Node | null {
+  const nodeElement = treeView.element().querySelectorAll('.dx-treeview-node')[index];
+  if (nodeElement) {
+    return getNodeByKey(treeView.getNodes(), nodeElement.getAttribute('data-item-id'));
+  }
+  return null;
+}
+
+function getLocalIndex(array: TreeItem[], key: string | number, keyExpr: string): number {
+  const idsArray = array.map((elem: TreeItem) => (elem as Record<string, unknown>)[keyExpr] as string | number);
+  return idsArray.indexOf(key);
+}
+
+function calculateToIndex(e: SortableTypes.DragChangeEvent | SortableTypes.DragEndEvent): number {
+  if (e.dropInsideItem) return e.toIndex ?? 0;
+  const fromIndex = e.fromIndex ?? 0;
+  const toIndex = e.toIndex ?? 0;
+  return fromIndex >= toIndex ? toIndex : toIndex + 1;
 }
 
 function canDrag(treeView: dxTreeView, e: SortableTypes.DragStartEvent): boolean {
@@ -39,67 +89,17 @@ function moveNodes(items: TreeItem[], e: SortableTypes.DragEndEvent, toNode: Nod
   fromIndices.forEach((i: number) => items.splice(i, 1));
   const toIndex = toNode === null || !toNode.itemData
     ? items.length
-    : getLocalIndex(items, toNode.itemData[treeFieldExpr.key] as string | number, treeFieldExpr.key);
+    : getLocalIndex(items, (toNode.itemData as Record<string, unknown>)[treeFieldExpr.key] as string | number, treeFieldExpr.key);
   items.splice(toIndex, 0, ...nodesToMove.map((i: Node) => i.itemData as TreeItem).filter((item): item is TreeItem => item !== undefined));
   nodesToMove.forEach((i: Node) => {
     if (i.itemData && toNode?.itemData) {
       if (e.dropInsideItem) {
-        i.itemData[treeFieldExpr.parentKey] = toNode.itemData[treeFieldExpr.key];
+        (i.itemData as Record<string, unknown>)[treeFieldExpr.parentKey] = (toNode.itemData as Record<string, unknown>)[treeFieldExpr.key];
       } else {
-        i.itemData[treeFieldExpr.parentKey] = toNode != null ? toNode.itemData[treeFieldExpr.parentKey] : undefined;
+        (i.itemData as Record<string, unknown>)[treeFieldExpr.parentKey] = toNode != null ? (toNode.itemData as Record<string, unknown>)[treeFieldExpr.parentKey] : undefined;
       }
     }
   });
-}
-
-function isParent(node: Node, possibleParentNode: Node): boolean {
-  if (!node.parent) return false;
-  return node.parent.key !== possibleParentNode.key ? isParent(node.parent, possibleParentNode) : true;
-}
-
-function getTopNodes(nodes: Node[]): Node[] {
-  return nodes.filter((nodeToCheck: Node) => !nodes.some((n: Node) => isParent(nodeToCheck, n)));
-}
-
-function getVisualIndexByNode(treeView: dxTreeView, key: string | number): number {
-  const nodeElements = Array.from(treeView.element().querySelectorAll('.dx-treeview-node'));
-  const nodeElement = nodeElements.find((n: Element) => n.getAttribute('data-item-id') === key);
-  return nodeElements.indexOf(nodeElement as Element);
-}
-
-function getNodeByVisualIndex(treeView: dxTreeView, index: number): Node | null {
-  const nodeElement = treeView.element().querySelectorAll('.dx-treeview-node')[index];
-  if (nodeElement) {
-    return getNodeByKey(treeView.getNodes(), nodeElement.getAttribute('data-item-id'));
-  }
-  return null;
-}
-
-function getNodeByKey(nodes: Node[], key: string | number | null): Node | null {
-  for (const node of nodes) {
-    if (node.key === key) {
-      return node;
-    }
-    if (node.children) {
-      const foundNode = getNodeByKey(node.children, key);
-      if (foundNode != null) {
-        return foundNode;
-      }
-    }
-  }
-  return null;
-}
-
-function getLocalIndex(array: TreeItem[], key: string | number, keyExpr: string): number {
-  const idsArray = array.map((elem: TreeItem) => elem[keyExpr] as string | number);
-  return idsArray.indexOf(key);
-}
-
-function calculateToIndex(e: SortableTypes.DragChangeEvent | SortableTypes.DragEndEvent): number {
-  if (e.dropInsideItem) return e.toIndex ?? 0;
-  const fromIndex = e.fromIndex ?? 0;
-  const toIndex = e.toIndex ?? 0;
-  return fromIndex >= toIndex ? toIndex : toIndex + 1;
 }
 
 function TreeViewPlain(props: TreeViewPlainProps): JSX.Element {
