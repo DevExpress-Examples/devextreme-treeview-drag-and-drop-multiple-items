@@ -80,8 +80,9 @@ export class TreeViewHierarchyComponent {
     });
     if (e.dropInsideItem) {
       if (!toNode?.itemData) return;
-      const toIndex = (toNode.itemData[treeFieldExpr.items] as TreeItem[]).length;
-      (toNode.itemData[treeFieldExpr.items] as TreeItem[]).splice(toIndex, 0, ...nodesToMove.map((i: Node) => i.itemData as TreeItem));
+      const itemDataRecord = toNode.itemData as Record<string, TreeItem[]>;
+      const toIndex = itemDataRecord[treeFieldExpr.items].length;
+      itemDataRecord[treeFieldExpr.items].splice(toIndex, 0, ...nodesToMove.map((i: Node) => i.itemData as TreeItem));
     } else {
       const toNodeContainingArray = this.getNodeContainingArray(toNode, items, treeFieldExpr.items);
       const toIndex = toNode === null
@@ -103,12 +104,12 @@ export class TreeViewHierarchyComponent {
   getNodeContainingArray(node: Node | null, rootArray: TreeItem[], itemsExpr: string): TreeItem[] {
     return node === null || !node.parent || !node.parent.itemData
       ? rootArray
-      : (node.parent.itemData[itemsExpr] as TreeItem[]);
+      : ((node.parent.itemData as Record<string, unknown>)[itemsExpr] as TreeItem[]);
   }
 
-  getVisualIndexByNode(treeView: dxTreeView, node: TreeItem): number {
+  getVisualIndexByNode(treeView: dxTreeView, node: Node): number {
     const nodeElements = Array.from(treeView.element().querySelectorAll('.dx-treeview-node'));
-    const nodeElement = nodeElements.find((n: Element) => n.getAttribute('data-item-id') === String(node['key']));
+    const nodeElement = nodeElements.find((n: Element) => n.getAttribute('data-item-id') === String(node.key));
     return nodeElements.indexOf(nodeElement as Element);
   }
 
@@ -143,7 +144,7 @@ export class TreeViewHierarchyComponent {
   }
 
   getLocalIndex(array: TreeItem[], key: string | number, keyExpr: string): number {
-    const idsArray = array.map((elem: TreeItem) => elem[keyExpr] as string | number);
+    const idsArray = array.map((elem: TreeItem) => (elem as Record<string, unknown>)[keyExpr] as string | number);
     return idsArray.indexOf(key);
   }
 }

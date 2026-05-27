@@ -2,6 +2,7 @@ import { type Item as TreeItem } from 'devextreme/ui/tree_view';
 
 interface DriveItem extends TreeItem {
   name: string;
+  items?: DriveItem[];
 }
 
 export const itemsDrivePlain: DriveItem[] = [{

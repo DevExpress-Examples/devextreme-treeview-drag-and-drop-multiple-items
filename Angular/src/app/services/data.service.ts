@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Item as TreeItem } from 'devextreme/ui/tree_view';
 
-const itemsDrivePlain: TreeItem[] = [{
+interface DriveItem extends TreeItem {
+  name: string;
+  items?: DriveItem[];
+}
+
+const itemsDrivePlain: DriveItem[] = [{
   id: '1',
   name: 'Documents',
   icon: 'activefolder',
@@ -103,7 +108,7 @@ const itemsDrivePlain: TreeItem[] = [{
   expanded: true,
 }];
 
-const itemsDriveHierarchy: TreeItem[] = [{
+const itemsDriveHierarchy: DriveItem[] = [{
   id: '1',
   name: 'Documents',
   hasItems: true,

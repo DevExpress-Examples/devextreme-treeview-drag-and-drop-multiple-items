@@ -80,14 +80,14 @@ export class TreeViewPlainComponent {
     fromIndices.forEach((i: number) => items.splice(i, 1));
     const toIndex = toNode === null || !toNode.itemData
       ? items.length
-      : this.getLocalIndex(items, toNode.itemData[treeFieldExpr.key] as string | number, treeFieldExpr.key);
+      : this.getLocalIndex(items, (toNode.itemData as Record<string, unknown>)[treeFieldExpr.key] as string | number, treeFieldExpr.key);
     items.splice(toIndex, 0, ...nodesToMove.map((i: Node) => i.itemData).filter((item): item is TreeItem => item !== undefined));
     nodesToMove.forEach((i: Node) => {
       if (i.itemData && toNode?.itemData) {
         if (e.dropInsideItem) {
-          i.itemData[treeFieldExpr.parentKey] = toNode.itemData[treeFieldExpr.key];
+          (i.itemData as Record<string, unknown>)[treeFieldExpr.parentKey] = (toNode.itemData as Record<string, unknown>)[treeFieldExpr.key];
         } else {
-          i.itemData[treeFieldExpr.parentKey] = toNode != null ? toNode.itemData[treeFieldExpr.parentKey] : undefined;
+          (i.itemData as Record<string, unknown>)[treeFieldExpr.parentKey] = toNode != null ? (toNode.itemData as Record<string, unknown>)[treeFieldExpr.parentKey] : undefined;
         }
       }
     });
@@ -132,7 +132,7 @@ export class TreeViewPlainComponent {
   }
 
   getLocalIndex(array: TreeItem[], key: string | number, keyExpr: string): number {
-    const idsArray = array.map((elem: TreeItem) => elem[keyExpr] as string | number);
+    const idsArray = array.map((elem: TreeItem) => (elem as Record<string, unknown>)[keyExpr] as string | number);
     return idsArray.indexOf(key);
   }
 
