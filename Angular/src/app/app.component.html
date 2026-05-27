@@ -10,19 +10,19 @@
     </div>
   </div>
   <dx-tab-panel [deferRendering]="false">
-    <dxi-item title="Plain Data">
+    <dxi-tab-panel-item title="Plain Data">
       <div *dxTemplate>
         <tree-view-plain
           [shouldClearSelection]="clearSelectionAfterDrop"
         ></tree-view-plain>
       </div>
-    </dxi-item>
-    <dxi-item title="Hierarchical Data">
+    </dxi-tab-panel-item>
+    <dxi-tab-panel-item title="Hierarchical Data">
       <div *dxTemplate>
         <tree-view-hierarchy
           [shouldClearSelection]="clearSelectionAfterDrop"
         ></tree-view-hierarchy>
       </div>
-    </dxi-item>
+    </dxi-tab-panel-item>
   </dx-tab-panel>
 </div>
