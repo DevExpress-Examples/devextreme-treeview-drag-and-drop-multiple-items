@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { DxSwitchModule, DxTabPanelModule } from 'devextreme-angular';
 import { TreeViewPlainComponent } from './components/tree-view-plain/tree-view-plain.component';
 import { TreeViewHierarchyComponent } from './components/tree-view-hierarchical/tree-view-hierarchy.component';
@@ -8,6 +8,7 @@ import { TreeViewHierarchyComponent } from './components/tree-view-hierarchical/
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [DxTabPanelModule, DxSwitchModule, TreeViewPlainComponent, TreeViewHierarchyComponent],
 })
 export class AppComponent {

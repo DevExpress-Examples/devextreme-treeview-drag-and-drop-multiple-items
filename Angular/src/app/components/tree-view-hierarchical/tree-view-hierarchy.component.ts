@@ -1,4 +1,4 @@
-import { Component, ViewChild, Input } from '@angular/core';
+import { Component, ViewChild, Input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataService } from 'src/app/services/data.service';
 import { DxSortableModule, DxTreeViewComponent, DxTreeViewModule } from 'devextreme-angular';
@@ -14,6 +14,7 @@ interface TreeFieldExpr {
   selector: 'tree-view-hierarchy',
   templateUrl: './tree-view-hierarchy.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CommonModule, DxTreeViewModule, DxSortableModule],
 })
 export class TreeViewHierarchyComponent {
